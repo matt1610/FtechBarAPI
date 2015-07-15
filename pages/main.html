@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BronzeCam">
+ 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bronze Beach Surf Camera</title>
+ 
+  <!-- Bootstrap CSS -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+ 
+  <style type="text/css">
+  #stream {
+    margin: 0px auto;
+    display: block;
+    margin-top: 20px;
+  }
+
+  .btn {
+  	
+  }
+  </style>
+ 
+  	<!-- AngularJS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+	<!-- Firebase -->
+	<script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+
+	<!-- AngularFire -->
+	<script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+  <script>
+
+  	var BronzeCam = angular.module('BronzeCam', ['firebase'])
+
+  	.controller('MainCtrl', function($scope, $http){
+
+  		$scope.Start = function() {
+  			console.log($scope.SRC);
+  		}
+
+  		$scope.GetImage = function() {
+  			$http.get('https://bronzecam.firebaseio.com/img.json').then(function(response) {
+	  			$scope.SRC = response.data;
+	  		});
+  		}
+
+  		$scope.GetImage();
+  		
+  	})
+  </script>
+</head>
+ 
+<body class="container" ng-controller="MainCtrl">
+  <h1 class="text-center">Bronze Beach Surf Camera
+    <small>Powered by PI</small>
+  </h1>
+ 
+  <hr>
+ 
+  <!-- <button type="button" id="" class="btn btn-info start" ng-click="Start()">Start Camera</button> -->
+  <button type="button" id="" class="btn btn-info" ng-click="GetImage()">Update Image</button>
+ 
+  <div class="row">
+    <img src="{{SRC}}" id="stream" class="img-responsive">
+  </div>
+ 
+</body>
+ 
+</html>
