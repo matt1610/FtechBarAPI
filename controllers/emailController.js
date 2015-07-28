@@ -16,7 +16,7 @@ exports.sendEmail = function(req, res) {
   var mailOptions = {};
 
   mailOptions.from = 'noreply@firsttechbarapp.co.za';
-  mailOptions.to = 'mattstarkey@me.com';
+  mailOptions.to = req.body.email;
   mailOptions.subject = 'Your Bar Bill';
 
   var total = 0;
