@@ -11,7 +11,7 @@
     "body-parser": "",
     "cors": "",
     "express": "~4.9.x",
-    "mongodb": "",
+    
     "mongodb-uri": "",
     "mongoose": "",
     "passport": "",
