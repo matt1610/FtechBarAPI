@@ -2,12 +2,12 @@
 
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
-var User = require('../models/user.js');
+var Admin = require('../models/admin.js');
 
 
 passport.use(new BasicStrategy(
   function(username, password, callback) {
-    User.findOne({ username: username }, function (err, user) {
+    Admin.findOne({ name: username }, function (err, user) {
       if (err) { return callback(err); }
 
       // No user found with that username

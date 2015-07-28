@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BarAdmin">
+ 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bar App Admin</title>
+ 
+  <!-- Bootstrap CSS -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/flat-ui.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  	<!-- AngularJS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+</head>
+ 
+<body ng-controller="MainCtrl">
+
+
+  <div class="veil" ng-show="Loading">
+      <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+        <g fill="none" fill-rule="evenodd" stroke-width="2">
+            <circle cx="22" cy="22" r="1">
+                <animate attributeName="r"
+                    begin="0s" dur="1.8s"
+                    values="1; 20"
+                    calcMode="spline"
+                    keyTimes="0; 1"
+                    keySplines="0.165, 0.84, 0.44, 1"
+                    repeatCount="indefinite" />
+                <animate attributeName="stroke-opacity"
+                    begin="0s" dur="1.8s"
+                    values="1; 0"
+                    calcMode="spline"
+                    keyTimes="0; 1"
+                    keySplines="0.3, 0.61, 0.355, 1"
+                    repeatCount="indefinite" />
+            </circle>
+            <circle cx="22" cy="22" r="1">
+                <animate attributeName="r"
+                    begin="-0.9s" dur="1.8s"
+                    values="1; 20"
+                    calcMode="spline"
+                    keyTimes="0; 1"
+                    keySplines="0.165, 0.84, 0.44, 1"
+                    repeatCount="indefinite" />
+                <animate attributeName="stroke-opacity"
+                    begin="-0.9s" dur="1.8s"
+                    values="1; 0"
+                    calcMode="spline"
+                    keyTimes="0; 1"
+                    keySplines="0.3, 0.61, 0.355, 1"
+                    repeatCount="indefinite" />
+            </circle>
+        </g>
+    </svg>
+  </div>
+  
+
+  <div class="container">
+
+  <div class="jumbotron">
+    <h1>Hello!</h1>
+    <p>This is the Bar App admin screen.</p>
+    <button type="button" class="btn btn-success" ng-click="SendToAll()" ng-show="LoggedIn">Send Bills to everyone</button>
+  </div>
+
+   <div class="row" ng-hide="LoggedIn">
+      <div class="col-md-4 col-md-offset-4">
+        <h3>Please log in.</h3>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="LoginUser.username">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="LoginUser.password">
+          </div>
+          <button type="submit" class="btn btn-default" ng-click="LogIn()">Submit</button>
+        </form>
+
+      </div>
+    </div>
+
+    <div ng-show="LoggedIn">
+        <ul class="nav nav-tabs">
+          <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.name)}" ng-click="onClickTab(tab)"><a>{{tab.title}}</a></li>
+        </ul>
+
+        <!-- Bills -->
+        <div class="table-responsive" ng-show="currentTab == 'bills'">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="hidden-xs">#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Total</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="bill in Bills track by $index">
+                <th scope="row" class="hidden-xs">{{$index + 1}}</th>
+                <td>{{bill.name}}</td>
+                <td>{{bill.email}}</td>
+                <td>R {{GetTotal(bill)}}</td>
+                <td>
+                  <button type="button" class="btn btn-success" ng-click="SendBill(bill)">Send Bill</button>
+                  <button type="button" class="btn btn-danger">Clear Bill</button>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+      </div>
+      <!-- End Bills -->
+
+      <h2 ng-show="currentTab == 'additems'">Add a new menu item <hr></h2>
+
+      <div class="col-sm-6">
+        <!-- Add Menu Item -->
+          <form ng-show="currentTab == 'additems'">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Item Name</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Item Name" ng-model="NewItem.name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Price</label>
+              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Item Price in Rands" ng-model="NewItem.price" required>
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="AddItem()">Add Menu Item</button>
+          </form>
+      </div>
+      <!-- End New Items -->
+
+       <h2 ng-show="currentTab == 'addevents'">Add a new user/event <hr></h2>
+
+      <div class="col-sm-6">
+        <!-- Add Menu Item -->
+          <form ng-show="currentTab == 'addevents'">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name of User/Event</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name" ng-model="AddEventUser.name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Email address to send bill</label>
+              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Email Address" ng-model="AddEventUser.email"required>
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="AddEvent()">Add New User</button>
+          </form>
+      </div>
+      <!-- End New Items -->
+
+
+
+    </div>
+    <!-- EndWrapper -->
+
+    
+
+    
+    
+  </div>
+ 
+</body>
+ 
+</html>

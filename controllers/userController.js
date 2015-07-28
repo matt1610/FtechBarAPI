@@ -1,20 +1,24 @@
 
 
-var User = require('../models/user.js');
+var Admin = require('../models/admin.js');
 
 exports.postUsers = function(req, res) {
-  var user = new User({
-    username: req.query.username,
-    password: req.query.password,
-    email : req.query.email
+
+  console.log(req.body);
+
+  var admin = new Admin({
+    name: req.body.username,
+    password: req.body.password,
+    email : req.body.email
   });
   
-  user.save(function(err) {
+  admin.save(function(err) {
     if (err) {
       // res.send(err);
+      console.log(err);
       res.json({ message: 'This username already exists', success : false });
     } else{
-      res.json({ message: 'Welcome to WaveHunter', success : true });
+      res.json({ message: 'Welcome to Bar App', success : true });
     }
       
 
