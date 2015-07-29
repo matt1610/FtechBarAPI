@@ -14,7 +14,7 @@ var emailController = require('./controllers/emailController.js');
 
 var passport = require('passport');
 
-var DBURI = 'mongodb://ftechbar:ftechbar@ds036698.mongolab.com:36698/firsttechbar';
+var DBURI = process.env.DBURI;
 var mongooseURI = uriUtil.formatMongoose(DBURI);
 
 mongoose.connect(mongooseURI);

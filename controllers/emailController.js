@@ -1,17 +1,13 @@
 
 var nodemailer = require('nodemailer');
+var secrets = require('../config/secrets.js');
 
 exports.sendEmail = function(req, res) {
 
   // console.log(req.body.email);
   // return;
 
-  var transporter = nodemailer.createTransport({
-      service: 'SendGrid',
-      auth: {
-          user: 'matt1610',
-          pass: 'Element@12'
-      }});
+  var transporter = nodemailer.createTransport(secrets.emailOptions);
 
   var mailOptions = {};
 
