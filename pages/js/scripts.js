@@ -168,7 +168,7 @@ var BarAdmin = angular.module('BarAdmin', [])
 
 .factory('APIPath', function(){
 	// return 'http://localhost:5000/';
-	return 'http://ftechbar.azurewebsites.net/';
+	return 'http://ftechbarapi.azurewebsites.net/';
 })
 
 .factory('Base64', function() {
