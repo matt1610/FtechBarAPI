@@ -1,21 +1,22 @@
 
 
-var Event = require('../models/event.js');
+var User = require('../models/user.js');
 
 exports.newEvent = function(req, res) {
 
-  var eventUser = new Event({
+  var user = new User({
     name: req.body.name,
-    email : req.body.email
+    email : req.body.email,
+    orders : []
   });
   
-  eventUser.save(function(err) {
+  user.save(function(err) {
     if (err) {
       // res.send(err);
       console.log(err);
       res.json({ message: 'This username already exists', success : false });
     } else{
-      res.json({ message: 'Event User Created', success : true });
+      res.json({ message: 'User Created', success : true });
     }
       
 
@@ -26,10 +27,10 @@ exports.newEvent = function(req, res) {
 
 
 exports.getCustomEventUsers = function(req, res) {
-  Event.find(function(err, eventUsers) {
+  User.find(function(err, users) {
     if (err)
       res.send(err);
 
-    res.json({success : true, eventUsersList : eventUsers});
+    res.json({success : true, eventUsersList : users});
   });
 };

@@ -4,26 +4,6 @@
 
 var User = require('../models/user.js');
 
-exports.createAdvert = function(req, res) {
-  var advert = new Advert({
-    src: req.query.src,
-    link: req.query.link,
-    client : req.query.client
-  });
-  
-  advert.save(function(err) {
-    if (err) {
-      // res.send(err);
-      res.json({ message: 'Something went wrong', success : false });
-    } else{
-      res.json({ message: 'New advert created', success : true });
-    }
-      
-
-    
-  });
-};
-
 exports.getBills = function(req, res) {
   User.find().exec(function(err, data) {
     res.json(data);
