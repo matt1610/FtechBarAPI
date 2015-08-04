@@ -104,7 +104,7 @@
             </thead>
 
             <tbody>
-              <tr ng-repeat="bill in Bills track by $index">
+              <tr ng-repeat="bill in Bills track by $index" ng-show="GetTotal(bill) > 0">
                 <th scope="row" class="hidden-xs">{{$index + 1}}</th>
                 <td>{{bill.name}}</td>
                 <td>{{bill.email}}</td>
