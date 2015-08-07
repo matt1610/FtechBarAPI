@@ -11,7 +11,7 @@ exports.getBills = function(req, res) {
 }
 
 exports.payBill = function( req, res ) {
-  User.update({email : req.body.email} {$set : {orders : []}}).exec(function(err, users) {
+  User.update({email : req.body.email}, {$set : {orders : []}}).exec(function(err, users) {
     if (err) {
       res.json({success : false, message : err});
     } else{
