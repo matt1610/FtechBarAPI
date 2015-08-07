@@ -9,9 +9,15 @@ var BarAdmin = angular.module('BarAdmin', [])
 	$scope.ListBills = true;
 	$scope.Loading = false;
 
-	API.GetBills().then(function(response) {
-		$scope.Bills = response.data;
-	});
+	$scope.GetBills = function() {
+		$scope.Loading = true;
+		API.GetBills().then(function(response) {
+			$scope.Bills = response.data;
+			$scope.Loading = false;
+		});
+	}
+
+	$scope.GetBills();
 
 	$scope.LogIn = function() {
 		$scope.Loading = true;
@@ -79,6 +85,7 @@ var BarAdmin = angular.module('BarAdmin', [])
 			$scope.Loading = true;
 			API.PayBill(user).then(function(response) {
 				alert(response.data.message);
+				$scope.GetBills();
 			});
 		};
 	}
@@ -177,6 +184,7 @@ var BarAdmin = angular.module('BarAdmin', [])
 			return $http({
 			  url : APIPath + 'clearBill',
 			  method : 'POST',
+			  data : user,
 			  headers : {'Content-Type': 'application/json'}
 			});
 		}

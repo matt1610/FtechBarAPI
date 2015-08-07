@@ -15,7 +15,7 @@ exports.payBill = function( req, res ) {
     if (err) {
       res.json({success : false, message : err});
     } else{
-       res.json({success : false, message : 'Bill cleared'});
+       res.json({success : true, message : 'Bill cleared'});
     }
   });
 }
