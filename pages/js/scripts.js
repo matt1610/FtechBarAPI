@@ -74,6 +74,15 @@ var BarAdmin = angular.module('BarAdmin', [])
 		};
 	}
 
+	$scope.PayBill = function(user) {
+		if (confirm('Clear this users bill?')) {
+			$scope.Loading = true;
+			API.PayBill(user).then(function(response) {
+				alert(response.data.message);
+			});
+		};
+	}
+
 
 
 
@@ -162,6 +171,14 @@ var BarAdmin = angular.module('BarAdmin', [])
 	          data : user,
 	          headers : {'Content-Type': 'application/json'}
 	        });
+		},
+		PayBill : function(user) {
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode('mattstarkey' + ':' + 'element');
+			return $http({
+			  url : APIPath + 'clearBill',
+			  method : 'POST',
+			  headers : {'Content-Type': 'application/json'}
+			});
 		}
 	};
 })

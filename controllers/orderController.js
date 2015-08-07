@@ -10,6 +10,16 @@ exports.getBills = function(req, res) {
   });
 }
 
+exports.payBill = function( req, res ) {
+  User.update({email : req.body.email} {$set : {orders : []}}).exec(function(err, users) {
+    if (err) {
+      res.json({success : false, message : err});
+    } else{
+       res.json({success : false, message : 'Bill cleared'});
+    }
+  });
+}
+
 exports.placeOrder = function( req, res ) {
 
   User.find({email : req.body.Name.email}).limit(1).exec(function(err, users) {
