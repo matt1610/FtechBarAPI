@@ -62,7 +62,7 @@ app.post('/sendMail', authController.isAuthenticated, emailController.sendEmail)
 app.post('/clearBill', authController.isAuthenticated, orderController.payBill);
 
 app.get('/test', function(req, res) {
-	res.send({isOn : true});
+	res.send({isOn : true, monkeyMode: 'engaged'});
 });
 
 app.get('/', function(req, res) {
